@@ -1,0 +1,144 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)" "(v12_0-dirty)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 10;
+:vpi_module "/usr/lib/ivl/system.vpi";
+:vpi_module "/usr/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/ivl/va_math.vpi";
+S_0x652af7fc4170 .scope module, "test_SyncCircuit" "test_SyncCircuit" 2 2;
+ .timescale -9 -10;
+v0x652af8018e20_0 .net "PresA", 0 0, v0x652af8018370_0;  1 drivers
+v0x652af8018ee0_0 .net "PresB", 0 0, v0x652af8018410_0;  1 drivers
+v0x652af8018f80_0 .var "X", 0 0;
+o0x7133ea2a0108 .functor BUFZ 1, C4<z>; HiZ drive
+v0x652af8019020_0 .net "Z", 0 0, o0x7133ea2a0108;  0 drivers
+v0x652af80190f0_0 .var "clock", 0 0;
+S_0x652af7fc4300 .scope module, "DUT" "StateMach" 2 6, 3 1 0, S_0x652af7fc4170;
+ .timescale -9 -10;
+    .port_info 0 /INPUT 1 "X";
+    .port_info 1 /OUTPUT 1 "Z";
+    .port_info 2 /INPUT 1 "clock";
+    .port_info 3 /OUTPUT 1 "PresA";
+    .port_info 4 /OUTPUT 1 "PresB";
+L_0x652af8019190 .functor NOT 1, v0x652af8018f80_0, C4<0>, C4<0>, C4<0>;
+L_0x652af8019280 .functor AND 1, v0x652af8018370_0, L_0x652af8019190, C4<1>, C4<1>;
+L_0x652af8019390 .functor AND 1, v0x652af8018f80_0, v0x652af8018410_0, C4<1>, C4<1>;
+L_0x652af8019450 .functor OR 1, L_0x652af8019280, L_0x652af8019390, C4<0>, C4<0>;
+L_0x652af8019590 .functor NOT 1, v0x652af8018370_0, C4<0>, C4<0>, C4<0>;
+L_0x652af8019600 .functor AND 1, L_0x652af8019590, v0x652af8018f80_0, C4<1>, C4<1>;
+L_0x652af8019700 .functor NOT 1, v0x652af8018f80_0, C4<0>, C4<0>, C4<0>;
+L_0x652af8019770 .functor AND 1, L_0x652af8019700, v0x652af8018410_0, C4<1>, C4<1>;
+L_0x652af8019830 .functor OR 1, L_0x652af8019600, L_0x652af8019770, C4<0>, C4<0>;
+v0x652af8001680_0 .net "NexA", 0 0, L_0x652af8019450;  1 drivers
+v0x652af80182b0_0 .net "NexB", 0 0, L_0x652af8019830;  1 drivers
+v0x652af8018370_0 .var "PresA", 0 0;
+v0x652af8018410_0 .var "PresB", 0 0;
+v0x652af80184d0_0 .net "X", 0 0, v0x652af8018f80_0;  1 drivers
+v0x652af80185e0_0 .net "Z", 0 0, o0x7133ea2a0108;  alias, 0 drivers
+v0x652af80186a0_0 .net *"_ivl_0", 0 0, L_0x652af8019190;  1 drivers
+v0x652af8018780_0 .net *"_ivl_10", 0 0, L_0x652af8019600;  1 drivers
+v0x652af8018860_0 .net *"_ivl_12", 0 0, L_0x652af8019700;  1 drivers
+v0x652af8018940_0 .net *"_ivl_14", 0 0, L_0x652af8019770;  1 drivers
+v0x652af8018a20_0 .net *"_ivl_2", 0 0, L_0x652af8019280;  1 drivers
+v0x652af8018b00_0 .net *"_ivl_4", 0 0, L_0x652af8019390;  1 drivers
+v0x652af8018be0_0 .net *"_ivl_8", 0 0, L_0x652af8019590;  1 drivers
+v0x652af8018cc0_0 .net "clock", 0 0, v0x652af80190f0_0;  1 drivers
+E_0x652af8002100 .event posedge, v0x652af8018cc0_0;
+    .scope S_0x652af7fc4300;
+T_0 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af8018370_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af8018410_0, 0, 1;
+    %end;
+    .thread T_0;
+    .scope S_0x652af7fc4300;
+T_1 ;
+    %wait E_0x652af8002100;
+    %load/vec4 v0x652af8001680_0;
+    %assign/vec4 v0x652af8018370_0, 0;
+    %load/vec4 v0x652af80182b0_0;
+    %assign/vec4 v0x652af8018410_0, 0;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x652af7fc4170;
+T_2 ;
+    %vpi_call 2 9 "$dumpfile", "test_circuit.vcd" {0 0 0};
+    %vpi_call 2 10 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x652af7fc4170 {0 0 0};
+    %vpi_call 2 11 "$monitor", "At t=%t, a=%b, b=%b, X=%b, clk=%b,", $time, v0x652af8018e20_0, v0x652af8018ee0_0, v0x652af8018f80_0, v0x652af80190f0_0 {0 0 0};
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af8018f80_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af8018f80_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x652af80190f0_0, 0, 1;
+    %delay 500, 0;
+    %vpi_call 2 35 "$finish" {0 0 0};
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "testbench.v";
+    "module.v";

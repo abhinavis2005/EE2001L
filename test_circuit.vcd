@@ -1,0 +1,95 @@
+$date
+	Mon Apr  1 14:24:24 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100ps
+$end
+$scope module test_SyncCircuit $end
+$var wire 1 ! Z $end
+$var wire 1 " PresB $end
+$var wire 1 # PresA $end
+$var reg 1 $ X $end
+$var reg 1 % clock $end
+$scope module DUT $end
+$var wire 1 & NexA $end
+$var wire 1 ' NexB $end
+$var wire 1 $ X $end
+$var wire 1 ! Z $end
+$var wire 1 % clock $end
+$var reg 1 # PresA $end
+$var reg 1 " PresB $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+1'
+0&
+0%
+1$
+0#
+0"
+z!
+$end
+#100
+1&
+1"
+1%
+#200
+0%
+#300
+0'
+1#
+1%
+#400
+0%
+#500
+0&
+0"
+1%
+#600
+0%
+#700
+1'
+0#
+1%
+#800
+0%
+#900
+1&
+1"
+1%
+#1000
+0%
+#1100
+0'
+1#
+1%
+#1200
+0%
+#1300
+0&
+0"
+1%
+#1400
+0%
+#1500
+1&
+0$
+#1600
+1%
+#1700
+0%
+#1800
+1%
+#1900
+0%
+#2000
+1%
+#2500
